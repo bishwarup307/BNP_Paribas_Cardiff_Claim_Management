@@ -1,0 +1,2 @@
+vw -d P1_Fold_1_train.vw -f mdl.vw --passes 40 -l 1.5 --binary --loss_function logistic -c -k -q nn --early_terminate 3
+vw -d P1_Fold_1_valid.vw -t -i mdl.vw -p preds_p1_fold1.txt --link logistic
