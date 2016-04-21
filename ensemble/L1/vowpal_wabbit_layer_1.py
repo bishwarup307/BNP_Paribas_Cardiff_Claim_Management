@@ -13,14 +13,16 @@ import numpy as np
 import pandas as pd
 from ml_metrics import log_loss
 
+# set up directories
 parent_dir = "/home/bishwarup/Kaggle/BNP/pipeLine4F/PartitionsVW/"
 converter = parent_dir + "csv2vw.py"
 num_partitions = 4
 
-
+# convert csv to vw with phraug2
 def convert_to_vw():
     # 4 data partitions    
     for i in xrange(num_partitions):
+        
         csv_files_path = "P" + `i+1`+"/"
         in_path = os.path.join(parent_dir, csv_files_path)
         vw_files_path = "P" + `i+1`+"_VW/"
@@ -65,12 +67,9 @@ def execute_vw_LR(data_version, fold = 99 ,num_iter = 20, loss = "logistic", lea
     else:
         vw_cmd = "vw -d " + in_file + " -f " + model_name + " --binary --loss_function " + loss + " --passes " + `num_iter` + " -l " + `learn_rate` +" -c -k " + " -q nn " + " --holdout_off"
         
-    
     os.system(vw_cmd)
     print "model created..."
 
-    
-    
 # predict on the validation/ test data using the model name from execute_vw_LR
 # will generate probabilities using --link logistic
 def predict_vw(data_version, fold = 99, is_test = False):
@@ -169,7 +168,6 @@ def delete_folds():
         f = os.path.join(fold_path, files_)
         os.remove(f)
     
-    
 if __name__ == '__main__':
 
     start_time = datetime.now()    
@@ -184,7 +182,6 @@ if __name__ == '__main__':
             execute_vw_LR(data_version= data_version, fold=num_fold, validate=True, num_iter=40,learn_rate=1.1)
             predict_vw(data_version=data_version, fold=num_fold, is_test= False)
             create_prediction_file(data_version=data_version, fold=num_fold, is_test= False)
-            
             
         merge_folds(data_version=data_version)
         execute_vw_LR(data_version=data_version, validate=False, num_iter=40,learn_rate=1.1)   
