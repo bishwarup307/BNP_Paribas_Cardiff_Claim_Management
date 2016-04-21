@@ -100,7 +100,6 @@ if __name__ == "__main__":
     # loop over all the four data partitions
     for i in xrange(4):
         
-            
         train_path = child_dir + "Partitions/"  + "trainP" + `i+1` + ".csv"
         test_path = child_dir + "Partitions/"  + "testP" + `i+1` + ".csv"
         model_version = "NN_P" + `i + 1` 
